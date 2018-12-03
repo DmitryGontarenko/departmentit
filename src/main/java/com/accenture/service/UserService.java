@@ -1,6 +1,6 @@
 package com.accenture.service;
 
-import com.accenture.dao.Role;
+import com.accenture.enums.Role;
 import com.accenture.dao.User;
 import com.accenture.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;

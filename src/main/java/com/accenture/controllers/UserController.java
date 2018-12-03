@@ -1,6 +1,6 @@
 package com.accenture.controllers;
 
-import com.accenture.dao.Role;
+import com.accenture.enums.Role;
 import com.accenture.dao.User;
 import com.accenture.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
