@@ -1,7 +1,10 @@
 package com.accenture.service;
 
+import com.accenture.dao.Employee;
+import com.accenture.dto.RegisterForm;
 import com.accenture.enums.Role;
 import com.accenture.dao.User;
+import com.accenture.repository.EmployeeRepo;
 import com.accenture.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +26,8 @@ public class UserService implements UserDetailsService {
     private MailService mailService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private EmployeeRepo employeeRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -45,8 +50,12 @@ public class UserService implements UserDetailsService {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setActivationCode(UUID.randomUUID().toString());
-        // шифрование пароля с помощью password encoder
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword())); // шифрование пароля с помощью password encoder
+        user.setCreatedAt(new Date());
+
+        Employee employee = new Employee();
+        user.setEmployee(employee);
+        employee.setUser_ac(user);
 
         userRepo.save(user);
 
@@ -113,7 +122,7 @@ public class UserService implements UserDetailsService {
     }
 
     // Обновление данных в профиле пользователя
-    public void updateProfile(User user, String password, String email) {
+    public void updateProfile(User user, String password, String email, Employee employee, String firstName) {
         // получаем текущий email
         String userEmail = user.getEmail();
         // проверяем изменился ли он
@@ -136,7 +145,14 @@ public class UserService implements UserDetailsService {
             user.setPassword(passwordEncoder.encode(password));
         }
 
+        if(!StringUtils.isEmpty(firstName)) {
+            employee.setFirstName(firstName);
+        }
+
+        // TODO: При успешном сохранении сделать уведомление
+        employeeRepo.save(employee);
         userRepo.save(user);
+
         // почту мы отправляем только тогда, когда email был изменен
         if (isEmailChanged) {
             sendMessage(user);

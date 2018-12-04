@@ -1,5 +1,6 @@
 package com.accenture.controllers;
 
+import com.accenture.dao.Employee;
 import com.accenture.enums.Role;
 import com.accenture.dao.User;
 import com.accenture.service.UserService;
@@ -53,9 +54,11 @@ public class UserController {
 
     // просмотр данных пользователя
     @GetMapping("profile")
-    public String getProfile(@AuthenticationPrincipal User user, Model model) {
+    public String getProfile(@AuthenticationPrincipal User user,
+                             Model model) {
         model.addAttribute("username", user.getUsername());
         model.addAttribute("email", user.getEmail());
+        model.addAttribute("firstName", user.getEmployee().getFirstName());
 
         return "profile";
     }
@@ -63,9 +66,10 @@ public class UserController {
     @PostMapping("profile")
     public String updateProfile(@AuthenticationPrincipal User user,
                                 @RequestParam String password,
-                                @RequestParam String email){
+                                @RequestParam String email,
+                                @RequestParam String firstName){
 
-        userService.updateProfile(user, password, email);
+        userService.updateProfile(user, password, email, user.getEmployee(), firstName);
         return "redirect:/user/profile";
     }
 }

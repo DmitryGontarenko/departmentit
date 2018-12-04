@@ -15,8 +15,23 @@ create table tb_user (
     email varchar(255),
     password varchar(255),
     username varchar(255),
+    created_at timestamp,
     primary key (id)
 );
+
+create table employee (
+    id int8 not null,
+    first_name varchar(255),
+    last_name varchar(255),
+    post_id int8,
+    sub_division_id int8,
+    user_ac int8,
+    primary key (id)
+);
+
+alter table if exists employee
+    add constraint employee_tb_user_fk
+    foreign key (user_ac) references tb_user (id);
 
 create table user_role (
     user_id int8 not null,

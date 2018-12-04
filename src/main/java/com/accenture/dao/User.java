@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -23,6 +24,12 @@ public class User implements UserDetails {
     @NotBlank(message = "Password cannot be empty")
     private String password;
     private boolean active;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", updatable = false)
+    private Date createdAt;
+
+    @OneToOne(mappedBy = "user_ac", cascade = CascadeType.ALL)
+    private Employee employee;
 
     @Email(message = "Email is not correct")
     @NotBlank(message = "Email cannot be empty")
