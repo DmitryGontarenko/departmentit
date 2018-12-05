@@ -1,10 +1,12 @@
-package com.accenture.dao;
+package com.accenture.entity.orders;
 
+import com.accenture.entity.user.User;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 @Entity
 @Data
@@ -23,6 +25,13 @@ public class Orders {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", updatable = false)
+    private Date createdAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at", updatable = false)
+    private Date updatedAt;
 
     public Orders() {
     }

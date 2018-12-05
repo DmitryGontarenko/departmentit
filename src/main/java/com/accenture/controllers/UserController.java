@@ -1,9 +1,8 @@
 package com.accenture.controllers;
 
-import com.accenture.dao.Employee;
 import com.accenture.enums.Role;
-import com.accenture.dao.User;
-import com.accenture.service.UserService;
+import com.accenture.entity.user.User;
+import com.accenture.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -59,6 +58,9 @@ public class UserController {
         model.addAttribute("username", user.getUsername());
         model.addAttribute("email", user.getEmail());
         model.addAttribute("firstName", user.getEmployee().getFirstName());
+        model.addAttribute("lastName", user.getEmployee().getLastName());
+        model.addAttribute("postId", user.getEmployee().getPostId().getName());
+        model.addAttribute("subDivId", user.getEmployee().getSubDivId().getName());
 
         return "profile";
     }
@@ -67,9 +69,10 @@ public class UserController {
     public String updateProfile(@AuthenticationPrincipal User user,
                                 @RequestParam String password,
                                 @RequestParam String email,
-                                @RequestParam String firstName){
+                                @RequestParam String firstName,
+                                @RequestParam String lastName){
 
-        userService.updateProfile(user, password, email, user.getEmployee(), firstName);
+        userService.updateProfile(user, password, email, user.getEmployee(), firstName, lastName);
         return "redirect:/user/profile";
     }
 }

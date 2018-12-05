@@ -1,7 +1,7 @@
 package com.accenture.controllers;
 
-import com.accenture.dao.User;
-import com.accenture.service.UserService;
+import com.accenture.entity.user.User;
+import com.accenture.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

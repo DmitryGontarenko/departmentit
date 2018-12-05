@@ -1,11 +1,12 @@
-package com.accenture.service;
+package com.accenture.service.user;
 
-import com.accenture.dao.Employee;
-import com.accenture.dto.RegisterForm;
+import com.accenture.entity.employee.Employee;
+import com.accenture.entity.orders.Orders;
+import com.accenture.entity.user.User;
 import com.accenture.enums.Role;
-import com.accenture.dao.User;
-import com.accenture.repository.EmployeeRepo;
-import com.accenture.repository.UserRepo;
+import com.accenture.repository.employee.EmployeeRepo;
+import com.accenture.repository.user.UserRepo;
+import com.accenture.service.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -107,7 +108,6 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
     }
 
-
     public boolean activateUser(String code) {
         User user = userRepo.findByActivationCode(code);
 
@@ -122,7 +122,8 @@ public class UserService implements UserDetailsService {
     }
 
     // Обновление данных в профиле пользователя
-    public void updateProfile(User user, String password, String email, Employee employee, String firstName) {
+    public void updateProfile(User user, String password, String email,
+                              Employee employee, String firstName, String lastName) {
         // получаем текущий email
         String userEmail = user.getEmail();
         // проверяем изменился ли он
@@ -148,7 +149,11 @@ public class UserService implements UserDetailsService {
         if(!StringUtils.isEmpty(firstName)) {
             employee.setFirstName(firstName);
         }
+        if(!StringUtils.isEmpty(lastName)) {
+            employee.setLastName(lastName);
+        }
 
+        // TODO: Сделать редактирование для должности и отдела
         // TODO: При успешном сохранении сделать уведомление
         employeeRepo.save(employee);
         userRepo.save(user);

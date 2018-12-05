@@ -1,6 +1,6 @@
-package com.accenture.repository;
+package com.accenture.repository.orders;
 
-import com.accenture.dao.Orders;
+import com.accenture.entity.orders.Orders;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

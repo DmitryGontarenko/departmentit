@@ -27,6 +27,12 @@
                 <a class="nav-link" href="/user/profile">Profile </a>
             </li>
             </#if>
+            <!--Раздел открыт только для администратора-->
+            <#if isAdmin>
+                <li class="nav-item">
+                    <a class="nav-link" href="/pc">Computers list</a>
+                </li>
+            </#if>
         </ul>
 
         <!--Выводим имя пользователя-->

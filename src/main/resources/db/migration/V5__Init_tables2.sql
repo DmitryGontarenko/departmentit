@@ -1,7 +1,8 @@
 create table employee_pc (
-    employee_id int8 NOT NULL,
-    pc_id int8 NOT NULL,
-    primary key (employee_id, pc_id)
+    id int8 NOT NULL,
+    employee_id int8,
+    pc_id int8,
+    primary key (id)
 );
 
 create table tb_pc (
@@ -17,19 +18,9 @@ create table model (
     primary key (id)
 );
 
-create table type (
-    id int8 NOT NULL,
-    name varchar(255),
-    primary key (id)
-);
-
 alter table if exists tb_pc
     add constraint tb_pc_model_fk
     foreign key (model_id) references model (id);
-
-alter table if exists tb_pc
-    add constraint tb_pc_type_fk
-    foreign key (type_id) references type (id);
 
 alter table if exists employee_pc
     add constraint employee_pc_employee_fk

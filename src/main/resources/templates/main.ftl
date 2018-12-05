@@ -34,10 +34,24 @@
 
 <#list orders as order>
 <div>
-    <b>${order.id}</b>
-    <span>${order.text}</span>
-    <i>${order.tag}</i>
-    <strong>${order.authorName}</strong>
+    <table>
+        <thead>
+        <tr>
+            <th>Description</th>
+            <th>Service</th>
+            <th>Author</th>
+            <th>Created at</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>${order.text}</td>
+            <td>${order.tag}</td>
+            <td>${order.authorName}</td>
+            <td>${order.createdAt?string('dd.MM.yyyy HH:mm:ss')}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <#else>
 No order

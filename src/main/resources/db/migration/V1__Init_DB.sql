@@ -5,6 +5,8 @@ create table orders (
     tag varchar(255),
     text varchar(2048),
     user_id int8,
+    created_at timestamp,
+    updated_at timestamp,
     primary key (id)
 );
 

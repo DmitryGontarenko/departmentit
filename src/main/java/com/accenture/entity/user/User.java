@@ -1,5 +1,6 @@
-package com.accenture.dao;
+package com.accenture.entity.user;
 
+import com.accenture.entity.employee.Employee;
 import com.accenture.enums.Role;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

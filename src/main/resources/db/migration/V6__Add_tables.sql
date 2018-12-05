@@ -1,11 +1,8 @@
 insert into model (id, name)
         values (1, 'Dell'), (2, 'HP'), (3, 'Apple'), (4, 'Asus'), (5, 'IRU');
 
-insert into type (id, name)
-        values (1, 'PC'), (2, 'Notebook'), (3, 'Monoblock');
-
 insert into tb_pc (id, type_id, model_id)
-        values (1, 1, 1), (2, 2, 2), (3, 3, 3);
+        values (1, 0, 1), (2, 1, 2), (3, 2, 3);
 
 insert into post (id, name)
         values (1, 'technician'), (2, 'laboratory_assistant'), (3, 'teacher'),
@@ -25,5 +22,5 @@ insert into sub_division (id, name, phone, campus_id)
 insert into employee (id, first_name, last_name, post_id, sub_division_id, user_ac)
         values (1, 'Dmitriy', 'Gontarenko', 1, 10, 1);
 
-insert into employee_pc (employee_id, pc_id)
-            values (1, 1);
+insert into employee_pc (id, employee_id, pc_id)
+            values (1, 1, 1);

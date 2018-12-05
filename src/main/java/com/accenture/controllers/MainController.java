@@ -1,8 +1,8 @@
 package com.accenture.controllers;
 
-import com.accenture.dao.Orders;
-import com.accenture.dao.User;
-import com.accenture.repository.OrdersRepo;
+import com.accenture.entity.orders.Orders;
+import com.accenture.entity.user.User;
+import com.accenture.repository.orders.OrdersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.Map;
 
 @Controller
@@ -56,6 +57,7 @@ public class MainController {
                       Model model) {
 
         order.setAuthor(user);
+        order.setCreatedAt(new Date());
 
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = UtilsController.getErrors(bindingResult);

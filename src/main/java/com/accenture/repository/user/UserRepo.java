@@ -1,6 +1,6 @@
-package com.accenture.repository;
+package com.accenture.repository.user;
 
-import com.accenture.dao.User;
+import com.accenture.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepo extends JpaRepository<User, Long> {
