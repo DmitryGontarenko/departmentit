@@ -1,4 +1,7 @@
+<#include "parts/security.ftl">
 <#import "parts/common.ftl" as c>
+
+
 
 
 <@c.page>
@@ -41,6 +44,7 @@
             <th>Service</th>
             <th>Author</th>
             <th>Created at</th>
+            <th>Status</th>
         </tr>
         </thead>
         <tbody>
@@ -49,6 +53,7 @@
             <td>${order.tag}</td>
             <td>${order.authorName}</td>
             <td>${order.createdAt?string('dd.MM.yyyy HH:mm:ss')}</td>
+            <td>${order.status}</td>
         </tr>
         </tbody>
     </table>

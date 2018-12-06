@@ -2,6 +2,7 @@ package com.accenture.controllers;
 
 import com.accenture.entity.orders.Orders;
 import com.accenture.entity.user.User;
+import com.accenture.enums.Status;
 import com.accenture.repository.orders.OrdersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import javax.xml.crypto.Data;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
@@ -57,7 +60,9 @@ public class MainController {
                       Model model) {
 
         order.setAuthor(user);
+        order.setStatus(Status.NEW);
         order.setCreatedAt(new Date());
+
 
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = UtilsController.getErrors(bindingResult);
@@ -78,8 +83,5 @@ public class MainController {
 
         return "main";
     }
-
-
-
 
 }

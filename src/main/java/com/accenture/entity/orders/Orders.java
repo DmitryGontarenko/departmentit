@@ -1,12 +1,14 @@
 package com.accenture.entity.orders;
 
 import com.accenture.entity.user.User;
+import com.accenture.enums.Status;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Data
@@ -25,6 +27,10 @@ public class Orders {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status", columnDefinition = "smallint")
+    private Status status;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", updatable = false)
