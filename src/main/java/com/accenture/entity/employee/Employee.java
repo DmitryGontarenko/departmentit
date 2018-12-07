@@ -6,6 +6,7 @@ import com.accenture.entity.subdivision.SubDivision;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
@@ -14,6 +15,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+    @NotBlank(message = "First name cannot be empty")
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")

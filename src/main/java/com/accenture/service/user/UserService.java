@@ -2,9 +2,12 @@ package com.accenture.service.user;
 
 import com.accenture.entity.employee.Employee;
 import com.accenture.entity.orders.Orders;
+import com.accenture.entity.post.Post;
+import com.accenture.entity.subdivision.SubDivision;
 import com.accenture.entity.user.User;
 import com.accenture.enums.Role;
 import com.accenture.repository.employee.EmployeeRepo;
+import com.accenture.repository.post.PostRepo;
 import com.accenture.repository.user.UserRepo;
 import com.accenture.service.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,8 @@ public class UserService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private EmployeeRepo employeeRepo;
+    @Autowired
+    private PostRepo postRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -41,7 +46,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public boolean addUser(User user) {
+    public boolean addUser(User user, String firstName, String lastName, Post post, Long postId) {
         User userFromDb = userRepo.findByUsername(user.getUsername());
 
         if(userFromDb != null) {
@@ -55,8 +60,17 @@ public class UserService implements UserDetailsService {
         user.setCreatedAt(new Date());
 
         Employee employee = new Employee();
+        // свзяываем user c employee
         user.setEmployee(employee);
+        // связываем employee с user
         employee.setUser_ac(user);
+        // заполняем employee
+        employee.setFirstName(firstName);
+        employee.setLastName(lastName);
+
+        post = postRepo.findById(postId).get();
+        employee.setPostId(post);
+
 
         userRepo.save(user);
 
@@ -64,6 +78,8 @@ public class UserService implements UserDetailsService {
 
         return true;
     }
+
+
 
     private void sendMessage(User user) {
         // проверка что поле email не пустое
@@ -124,6 +140,7 @@ public class UserService implements UserDetailsService {
     // Обновление данных в профиле пользователя
     public void updateProfile(User user, String password, String email,
                               Employee employee, String firstName, String lastName) {
+
         // получаем текущий email
         String userEmail = user.getEmail();
         // проверяем изменился ли он

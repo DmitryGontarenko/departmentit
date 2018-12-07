@@ -1,6 +1,9 @@
 package com.accenture.controllers;
 
+import com.accenture.entity.post.Post;
+import com.accenture.entity.subdivision.SubDivision;
 import com.accenture.entity.user.User;
+import com.accenture.repository.post.PostRepo;
 import com.accenture.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,15 +23,24 @@ public class RegistrationController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private PostRepo postRepo;
 
     @GetMapping("/registration")
-    public String registration(){
+    public String registration(Model model){
+
+        Iterable<Post> post = postRepo.findAll();
+        model.addAttribute("post", post);
 
         return "registration";
     }
 
     @PostMapping("/registration")
     public String addUser(@RequestParam("password2") String passwordConfirm,
+                          @RequestParam("firstName") String firstName,
+                          @RequestParam("lastName") String lastName,
+                          @RequestParam("selectPost") Long selectPost,
+                          Post post,
                           @Valid User user,
                           BindingResult bindingResult,
                           Model model) {
@@ -50,9 +62,8 @@ public class RegistrationController {
 
             return "registration";
         }
-        // если пользователь уже существует,
-        // сообщаем об этом на странице регистрации
-        if (!userService.addUser(user)) {
+        // если пользователь уже существует (false), сообщаем об этом на странице регистрации
+        if (!userService.addUser(user, firstName, lastName, post, selectPost)) {
             model.addAttribute("usernameError", "User exists!");
             return "registration";
         }

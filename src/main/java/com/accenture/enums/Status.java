@@ -1,5 +1,5 @@
 package com.accenture.enums;
 
 public enum Status {
-    NEW, DONE, CLOSED;
+    NEW, IN_PROGRESS, CLOSED;
 }

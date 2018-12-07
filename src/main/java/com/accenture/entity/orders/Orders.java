@@ -29,7 +29,7 @@ public class Orders {
     private User author;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "status", columnDefinition = "smallint")
+    @Column(name = "status", columnDefinition = "Integer")
     private Status status;
 
     @Temporal(TemporalType.TIMESTAMP)

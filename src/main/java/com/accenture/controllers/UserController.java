@@ -60,7 +60,7 @@ public class UserController {
         model.addAttribute("firstName", user.getEmployee().getFirstName());
         model.addAttribute("lastName", user.getEmployee().getLastName());
         model.addAttribute("postId", user.getEmployee().getPostId().getName());
-        model.addAttribute("subDivId", user.getEmployee().getSubDivId().getName());
+//        model.addAttribute("subDivId", user.getEmployee().getSubDivId().getName());
 
         return "profile";
     }

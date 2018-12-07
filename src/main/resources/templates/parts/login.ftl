@@ -53,6 +53,30 @@
         </#if>
     </div>
     </div>
+
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">First name:</label>
+            <div class="col-sm-6">
+                <input type="text" name="firstName" class="form-control" placeholder="Dmitriy" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Last name:</label>
+            <div class="col-sm-6">
+                <input type="text" name="lastName" class="form-control" placeholder="Gontarenko" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Post:</label>
+        <select class="col-sm-6 form-control" name="selectPost">
+            <#list post as post>
+                <option value="${post.id}">${post.name}</option>
+            </#list>
+        </select>
+        </div>
+
+
 </#if>
 <input type="hidden" name="_csrf" value="${_csrf.token}" />
 <#if !isRegisterForm><a href="/registration">Add new user</a></#if>

@@ -4,6 +4,7 @@ import com.accenture.entity.orders.Orders;
 import com.accenture.entity.user.User;
 import com.accenture.enums.Status;
 import com.accenture.repository.orders.OrdersRepo;
+import com.accenture.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,8 @@ public class MainController {
 
     @Autowired
     private OrdersRepo ordersRepo;
+    @Autowired
+    private OrderService orderService;
     
     @GetMapping("/")
     public String greeting(Map<String, Object> model) {
@@ -82,6 +85,18 @@ public class MainController {
         model.addAttribute("orders", orders);
 
         return "main";
+    }
+
+    @PostMapping("closeOrder")
+    public String closedOrder(@RequestParam("orderId") Long id) {
+        orderService.changeOrderStatusToClosed(id);
+        return "redirect:/main";
+    }
+
+    @PostMapping("inProgressOrder")
+    public String inProgressOrder(@RequestParam("orderId") Long id) {
+        orderService.changeOrderStatusToInProgress(id);
+        return "redirect:/main";
     }
 
 }
