@@ -1,23 +1,16 @@
 <#import "parts/common.ftl" as c>
 
 <@c.page>
-    List of users
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Role</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
+<h5 class="mb-5">List of users</h5>
+<div class="my-md-4 container">
+    <ul class="list-group">
         <#list users as user>
-        <tr>
-            <td>${user.username}</td>
-            <td><#list user.roles as role>${role}<#sep>, </#list></td>
-            <td><a href="/user/${user.id}">edit</a> </td>
-        </tr>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong>${user.username}</strong>
+            <#list user.roles as role>${role}<#sep>, </#list>
+            <a href="/user/${user.id}" class="btn btn-primary">edit</a>
+        </li>
         </#list>
-        </tbody>
-    </table>
+    </ul>
+</div>
 </@c.page>
