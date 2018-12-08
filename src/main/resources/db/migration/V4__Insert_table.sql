@@ -16,3 +16,6 @@ insert into sub_division (id, name, phone, campus_id)
 insert into employee (id, first_name, last_name, post_id, sub_division_id, user_ac)
         values (1, 'Dmitriy', 'Gontarenko', 1, 10, 1);
 
+insert into tb_tag (id, name)
+        values (1, 'fix'), (2, 'clear'), (3, 'tune'), (4, 'diagnostic'), (5, 'install');
+

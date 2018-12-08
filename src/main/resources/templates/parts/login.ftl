@@ -69,11 +69,19 @@
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Post:</label>
-        <select class="col-sm-6 form-control" name="selectPost">
-            <#list post as post>
-                <option value="${post.id}">${post.name}</option>
-            </#list>
-        </select>
+            <select class="col-sm-6 form-control" name="selectPost">
+                <#list post as post>
+                    <option value="${post.id}">${post.name}</option>
+                </#list>
+            </select>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Sub division:</label>
+            <select class="col-sm-6 form-control" name="selectSubDiv">
+                <#list subDivisions as sd>
+                    <option value="${sd.id}">${sd.name}</option>
+                </#list>
+            </select>
         </div>
 
 

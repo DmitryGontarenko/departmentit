@@ -35,8 +35,8 @@
             </#if>
         </ul>
 
-        <!--Выводим имя пользователя-->
-        <div class="navbar-text mr-3">${name}</div>
+        <!--Выводим имя пользователя, если он авторизован-->
+        <#if user??><div class="navbar-text mr-3">${name}</div><#else><a href="/login" class="btn btn-primary">Log In</a> </#if>
         <!--Если сессия с пользователем открыта-показана кнопка Log out-->
         <#if known><@l.logout /></#if>
     </div>

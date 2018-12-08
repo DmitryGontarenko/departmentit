@@ -8,6 +8,7 @@ import com.accenture.entity.user.User;
 import com.accenture.enums.Role;
 import com.accenture.repository.employee.EmployeeRepo;
 import com.accenture.repository.post.PostRepo;
+import com.accenture.repository.subdivision.SubDivRepo;
 import com.accenture.repository.user.UserRepo;
 import com.accenture.service.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,8 @@ public class UserService implements UserDetailsService {
     private EmployeeRepo employeeRepo;
     @Autowired
     private PostRepo postRepo;
+    @Autowired
+    private SubDivRepo subDivRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -46,7 +49,9 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public boolean addUser(User user, String firstName, String lastName, Post post, Long postId) {
+    public boolean addUser(User user, String firstName, String lastName,
+                           Post post, Long postId,
+                           SubDivision subDivision, Long subDiv) {
         User userFromDb = userRepo.findByUsername(user.getUsername());
 
         if(userFromDb != null) {
@@ -67,9 +72,12 @@ public class UserService implements UserDetailsService {
         // заполняем employee
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
-
+        // устанавливаем поле post в таблице employee
         post = postRepo.findById(postId).get();
         employee.setPostId(post);
+        // устанавливаем поле sub_division в таблице employee
+        subDivision = subDivRepo.findById(subDiv).get();
+        employee.setSubDivId(subDivision);
 
 
         userRepo.save(user);

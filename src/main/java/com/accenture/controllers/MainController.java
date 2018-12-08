@@ -1,9 +1,11 @@
 package com.accenture.controllers;
 
 import com.accenture.entity.orders.Orders;
+import com.accenture.entity.tag.Tag;
 import com.accenture.entity.user.User;
 import com.accenture.enums.Status;
 import com.accenture.repository.orders.OrdersRepo;
+import com.accenture.repository.tag.TagRepo;
 import com.accenture.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,6 +29,8 @@ public class MainController {
     private OrdersRepo ordersRepo;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private TagRepo tagRepo;
     
     @GetMapping("/")
     public String greeting(Map<String, Object> model) {
@@ -34,13 +38,11 @@ public class MainController {
     }
 
     @GetMapping("/main")
-    public String main(@RequestParam(required = false, defaultValue = "") String filter,
+    public String main(@RequestParam(required = false, defaultValue = "", name = "selectTag") String filter,
                        Model model) {
 
-        // findAll возрвщает Iterable
-        // findByTag возвращает List
-        // List  наследуется от Iterable, поэтому используем его
         Iterable<Orders> orders = ordersRepo.findAll();
+        Iterable<Tag> tags = tagRepo.findAll();
 
         // если строка фильтра не пустая - ищем по тегу
         // иначе, показываем все
@@ -50,6 +52,7 @@ public class MainController {
             orders = ordersRepo.findAll();
         }
 
+        model.addAttribute("tags", tags);
         model.addAttribute("orders", orders);
         model.addAttribute("filter", filter);
 
@@ -59,9 +62,14 @@ public class MainController {
     @PostMapping("/main")
     public String add(@AuthenticationPrincipal User user,
                       @Valid Orders order,
+                      Tag tag,
+                      @RequestParam("selectTag") Long tagId,
                       BindingResult bindingResult,
                       Model model) {
 
+        tag = tagRepo.findById(tagId).get();
+
+        order.setTag(tag);
         order.setAuthor(user);
         order.setStatus(Status.NEW);
         order.setCreatedAt(new Date());
@@ -84,7 +92,7 @@ public class MainController {
         Iterable<Orders> orders = ordersRepo.findAll();
         model.addAttribute("orders", orders);
 
-        return "main";
+        return "redirect:/main";
     }
 
     @PostMapping("closeOrder")
