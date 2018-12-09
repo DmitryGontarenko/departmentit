@@ -72,7 +72,7 @@
                             <form action="closeOrder" method="post">
                                 <input type="hidden" value="${order.id}" name="orderId">
                                 <input type="hidden" value="${_csrf.token}" name="_csrf">
-                                <#if order.status != "CLOSED"><button type="submit" class="btn btn-danger">CLOSED</button></#if>
+                                <#if order.status != "CLOSED" && order.author.username == name><button type="submit" class="btn btn-danger">CLOSED</button></#if>
                             </form>
                         </div>
 
